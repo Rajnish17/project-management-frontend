@@ -1,0 +1,52 @@
+/* sidebar.css */
+
+.sidebar {
+    width: 224px;
+    height: 95vh;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .head {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    padding: 10px 0;
+    cursor: pointer;
+    display: flex; /* Align icon and text horizontally */
+    align-items: center; /* Center items vertically */
+    text-decoration: none;
+      color: inherit;
+  }
+  
+  .icon {
+    margin-right: 10px; /* Adjust icon spacing */
+  }
+  
+  .nav-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .logout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    cursor: pointer;
+    display: flex; /* Align icon and text horizontally */
+    align-items: center; /* Center items vertically */
+    color: red;
+  }
+  
+ 
+  

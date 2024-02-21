@@ -1,0 +1,45 @@
+.card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  align-items: center; /* Added to vertically center the buttons */
+}
+
+.collapse-button, .add-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  color: black;
+}
+
+.content {
+  padding: 10px;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  padding: 5px;
+}
