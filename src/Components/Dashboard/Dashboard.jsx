@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import './dashboard.css';
+import './dashboard.css'; // Import external CSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown, faPlus } from '@fortawesome/free-solid-svg-icons';
-import Modal from './Modal';
+import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
+import Modal from './Modal'; // Import Modal component
 
 const Dashboard = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const toggleCollapse = () => {
-    setIsOpen(!isOpen);
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
 
   const openModal = () => {
@@ -21,34 +21,33 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      <div className="card">
-        <div className="header">
-          <div className="title">Backlog</div>
-          <div className="actions">
-            <button className="collapse-button" onClick={toggleCollapse}>
-              <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
-            </button>
-            <button className="add-button" onClick={openModal}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
+    <div className="parent-card">
+      <div className="card-header">
+        <h3>Todo</h3>
+        <div className="card-buttons">
+          <FontAwesomeIcon icon={faPlus} onClick={openModal} />
+          <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+        </div>
+      </div>
+
+      <div className="child-card">
+        <div className="card-header">
+          <h3>Child Todo</h3>
+          <div className="card-buttons">
+            <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
           </div>
         </div>
-        {isOpen && (
-          <div className="content">
-            
-            <ul className="items">
-              {[...Array(10)].map((_, index) => (
-                <li key={index} className="item">
-                  Item {index + 1}
-                </li>
-              ))}
-            </ul>
+        {showDropdown && (
+          <div className="dropdown">
+            <div>Edit</div>
+            <div>Share</div>
+            <div>Delete</div>
           </div>
         )}
-        {showModal && <Modal closeModal={closeModal} />}
       </div>
-    </>
+
+      {showModal && <Modal closeModal={closeModal} />} {/* Render the Modal component conditionally */}
+    </div>
   );
 };
 

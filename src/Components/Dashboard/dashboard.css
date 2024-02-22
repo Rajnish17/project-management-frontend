@@ -1,45 +1,58 @@
-.card {
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin: 10px;
-  overflow-y: auto;
+.parent-card {
+  width: 360px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 100px 20px;
+  height: 100vh;
 }
 
-.header {
+.card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px; /* Add margin bottom for spacing */
 }
 
-.title {
-  font-weight: bold;
-}
-
-.actions {
+.card-buttons {
   display: flex;
-  align-items: center; /* Added to vertically center the buttons */
 }
 
-.collapse-button, .add-button {
-  background-color: transparent;
-  border: none;
+.card-buttons > svg {
+  margin-right: 10px; /* Add margin between icons */
   cursor: pointer;
-  margin-left: 10px;
-  color: black;
 }
 
-.content {
+.child-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
-.items {
-  list-style: none;
-  padding: 0;
+.child-card .card-header {
+  justify-content: space-between;
+  align-items: center;
 }
 
-.item {
-  padding: 5px;
+.child-card .card-buttons > svg {
+  cursor: pointer;
+}
+
+.dropdown {
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  float: right;
+  margin-top: -29px
+}
+
+.dropdown > div {
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.dropdown > div:hover {
+  background-color: #ddd;
 }
