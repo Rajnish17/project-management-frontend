@@ -78,6 +78,7 @@ const Setting = () => {
             className="password-icon"
           />
         </div>
+        
       </div>
       <button className="update-button" onClick={handleUpdate}>Update</button>
     </div>

@@ -90,3 +90,27 @@ button {
   cursor: pointer;
   
 }
+
+.password-input {
+  position: relative;
+}
+
+.password-input input[type="password"] {
+  width: calc(100% - 40px); /* Adjust width to leave space for the button */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.error-message{
+  color: red;
+}

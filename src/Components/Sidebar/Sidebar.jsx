@@ -1,35 +1,48 @@
 // Sidebar.js
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTable, faChartBar, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './sidebar.css';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      
+      localStorage.removeItem("token");
+      navigate("/");
+
+    } catch (error) {
+      console.error("Logout error:", error);
+      
+    }
+  };
   return (
     <div className="sidebar">
       <div className="head">ProManage</div>
       <ul className="nav">
-        
+
         <Link to={"/dashboard"} className="nav-item">
-        <FontAwesomeIcon icon={faTable} className="icon" />  
+          <FontAwesomeIcon icon={faTable} className="icon" />
           Board
         </Link>
-       
-      
-       <Link to={"/analytics"} className="nav-item">
+
+
+        <Link to={"/analytics"} className="nav-item">
           <FontAwesomeIcon icon={faChartBar} className="icon" />
           Analytics
-       
-       </Link>
-        
+
+        </Link>
+
         <Link to={"/settings"} className="nav-item">
           <FontAwesomeIcon icon={faCog} className="icon" />
           Settings
         </Link>
       </ul>
-      <div className="logout">
+      <div className="logout" onClick={handleLogout}>
         <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
         Logout
       </div>

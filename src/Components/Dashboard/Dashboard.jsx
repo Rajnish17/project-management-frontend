@@ -21,7 +21,9 @@ const Dashboard = () => {
   };
 
   return (
+
     <div className="parent-card">
+    <div className="first-card">
       <div className="card-header">
         <h3>Todo</h3>
         <div className="card-buttons">
@@ -47,6 +49,90 @@ const Dashboard = () => {
       </div>
 
       {showModal && <Modal closeModal={closeModal} />} {/* Render the Modal component conditionally */}
+    </div>
+
+    <div className="second-card">
+      <div className="card-header">
+        <h3>Todo</h3>
+        <div className="card-buttons">
+          <FontAwesomeIcon icon={faPlus} onClick={openModal} />
+          <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+        </div>
+      </div>
+
+      <div className="child-card">
+        <div className="card-header">
+          <h3>Child Todo</h3>
+          <div className="card-buttons">
+            <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+          </div>
+        </div>
+        {showDropdown && (
+          <div className="dropdown">
+            <div>Edit</div>
+            <div>Share</div>
+            <div>Delete</div>
+          </div>
+        )}
+      </div>
+
+      {showModal && <Modal closeModal={closeModal} />} {/* Render the Modal component conditionally */}
+    </div>
+
+    <div className="second-card">
+      <div className="card-header">
+        <h3>Todo</h3>
+        <div className="card-buttons">
+          <FontAwesomeIcon icon={faPlus} onClick={openModal} />
+          <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+        </div>
+      </div>
+
+      <div className="child-card">
+        <div className="card-header">
+          <h3>Child Todo</h3>
+          <div className="card-buttons">
+            <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+          </div>
+        </div>
+        {showDropdown && (
+          <div className="dropdown">
+            <div>Edit</div>
+            <div>Share</div>
+            <div>Delete</div>
+          </div>
+        )}
+      </div>
+
+      {showModal && <Modal closeModal={closeModal} />} {/* Render the Modal component conditionally */}
+    </div>
+    <div className="second-card">
+      <div className="card-header">
+        <h3>Todo</h3>
+        <div className="card-buttons">
+          <FontAwesomeIcon icon={faPlus} onClick={openModal} />
+          <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+        </div>
+      </div>
+
+      <div className="child-card">
+        <div className="card-header">
+          <h3>Child Todo</h3>
+          <div className="card-buttons">
+            <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
+          </div>
+        </div>
+        {showDropdown && (
+          <div className="dropdown">
+            <div>Edit</div>
+            <div>Share</div>
+            <div>Delete</div>
+          </div>
+        )}
+      </div>
+
+      {showModal && <Modal closeModal={closeModal} />} {/* Render the Modal component conditionally */}
+    </div>
     </div>
   );
 };
