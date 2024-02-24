@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css'; // Import external CSS file
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Import icons
 import Art from "../../utils/Art.jpg";
@@ -19,9 +19,15 @@ const Login = () => {
   
     try {
       const response = await axios.post(`${baseUrl}/user/login`, { email, password });
+      // console.log(response.data.data.user._id);
+
+      const {_id} =response.data.data.user;
+
+      // console.log(_id);
       const {token} =response.data.data;
-      console.log(token);
+      
       localStorage.setItem("token",token);
+      localStorage.setItem("userId",_id);
       setTimeout(()=>{
         navigate("/dashboard");
       },1000)
