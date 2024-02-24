@@ -43,6 +43,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 20px;
+    height: 600px;
   }
   
   .card-header {
@@ -90,5 +91,15 @@
   
   .dropdown > div:hover {
     background-color: #ddd;
+  }
+
+  .child-data {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+  
+  .child-data p {
+    margin: 5px 0;
   }
   
