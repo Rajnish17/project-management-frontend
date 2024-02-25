@@ -1,7 +1,7 @@
 .main-container{
     display: block;
     width: 100vw;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     top: 0;
 }
 .topbox{
@@ -44,6 +44,7 @@
     padding: 20px;
     margin-bottom: 20px;
     height: 600px;
+    overflow: overlay
   }
   
   .card-header {
@@ -82,6 +83,9 @@
     z-index: 1;
     float: right;
     margin-top: -29px;
+    position: absolute;
+    margin-left: 375px;
+    margin-top: 110px 
   }
   
   .dropdown > div {

@@ -1,19 +1,21 @@
-.main-container{
+.container-main{
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+ 
   
-
 }
 .container {
   display: flex;
   border-radius: 5px;
   height: 90vh;
+  margin: auto;
+  margin-top: 30px;
   border: 2px solid #17A2B8 ;
+  width: 900px;
 }
 
 .left-side {
@@ -96,7 +98,6 @@ button {
 }
 
 .password-input input[type="password"] {
-  width: calc(100% - 40px); /* Adjust width to leave space for the button */
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -104,9 +105,10 @@ button {
   box-sizing: border-box;
 }
 
-.password-toggle {
+
+.password-toggle{
   position: absolute;
-  top: 50%;
+  top: 38%;
   right: 10px;
   transform: translateY(-50%);
   cursor: pointer;

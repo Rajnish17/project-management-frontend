@@ -15,7 +15,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
+  max-width: 600px;
   width: 80%;
 }
 
@@ -25,102 +25,61 @@
 
 .priority-buttons {
   display: flex;
+  justify-content: space-between;
+  width: 440px;
 }
 
-.priority-buttons button {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.priority-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
-.priority-buttons button:hover {
-  background-color: #1d0202;
-}
 
-.priority-buttons button.selected {
-  background-color: #007bff;
-  color: #ffffff;
-}
+
 
 .add-button {
-  background-color: #007bff;
-  color: #ffffff;
+  color: black;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+
 }
 
-.add-button:hover {
-  background-color: #0056b3;
-}
 
-.items-list {
-  list-style: none;
-  padding: 0;
-}
-
-.items-list li {
+.last-container{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
-.input-container {
-  position: relative;
-}
-
-.input-container input[type="checkbox"] {
-  position: absolute;
-  left: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.input-container .item-title {
-  flex: 1;
-  padding-left: 30px; /* Space for checkbox */
-}
-
-.input-container .remove-button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.button-group {
+.cancel-button{
+  width: 80px;
+  height: 20px;
+  padding: 10px;
+  border: 1px solid red;
+  color: red;
+  border-radius: 10px;
   display: flex;
-  justify-content: flex-end;
-  margin-top: 15px;
-}
-
-.button-group button {
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s;
+  
 }
 
-.button-group button + button {
-  margin-left: 10px;
+.save-button{
+  width: 80px;
+  height: 20px;
+  padding: 10px;
+  background-color: rgb(38, 216, 247);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
 }
 
-.button-group button:hover {
-  background-color: #0056b3;
-}
 
 .close-button {
   position: absolute;

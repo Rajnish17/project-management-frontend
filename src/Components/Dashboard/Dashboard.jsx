@@ -7,17 +7,16 @@ import baseUrl from "../api";
 import axios from 'axios';
 
 const Dashboard = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState('');
-  const [childData, setChildData] = useState('');
-  const [dummyDataVisible, setDummyDataVisible] = useState(false);
+  const [childData, setChildData] = useState([]);
+  const [cardVisibility, setCardVisibility] = useState({}); // State for toggling individual card visibility
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     try {
       axios.get(`${baseUrl}/user/getone/${userId}`).then((res) => {
-        console.log(res.data.user.fullName);
+        // console.log(res.data.user.fullName);
         setName(res.data.user.fullName);
       });
     } catch (error) {
@@ -25,9 +24,25 @@ const Dashboard = () => {
     }
   }, []);
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
+  useEffect(() => {
+    try {
+      const id =localStorage.getItem("userId");
+      const token = localStorage.getItem('token');
+
+      const config = {
+        headers: {
+          'token': `bearer ${token}`,
+          'Content-Type': 'application/json' // Assuming your API expects JSON data
+        }
+      };
+      axios.get(`${baseUrl}/todo/getall/${id}`,config).then((res) => {
+        // console.log(res.data);
+        setChildData(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [childData]);
 
   const openModal = () => {
     setShowModal(true);
@@ -37,8 +52,24 @@ const Dashboard = () => {
     setShowModal(false);
   };
 
-  const toggleDummyData = () => {
-    setDummyDataVisible(!dummyDataVisible);
+  const toggleDummyData = (id) => {
+    setCardVisibility(prevState => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        dummyDataVisible: !prevState[id]?.dummyDataVisible
+      }
+    }));
+  };
+
+  const togglethreedot = (id) => {
+    setCardVisibility(prevState => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        showOptions: !prevState[id]?.showOptions
+      }
+    }));
   };
 
   const date = () => {
@@ -75,30 +106,33 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="child-card">
-            <div className="card-header">
-              <h3>Child Todo</h3>
-              <div className="card-buttons">
-                
-                {showDropdown ? (
-                  <FontAwesomeIcon icon={faAngleUp} onClick={toggleDummyData} />
-                ) : (
-                  <FontAwesomeIcon icon={faAngleDown} onClick={toggleDummyData} />
+          {childData.map((ele, index) => (
+            <div className="child-card" key={index}>
+              <div className="card-header">
+                <h3>{ele.title}</h3>
+                <div className="card-buttons">
+                  <FontAwesomeIcon icon={cardVisibility[ele._id]?.dummyDataVisible ? faAngleUp : faAngleDown} onClick={() => toggleDummyData(ele._id)} />
+                  <FontAwesomeIcon icon={faEllipsisV} onClick={() => togglethreedot(ele._id)} />
+                </div>
+                {cardVisibility[ele._id]?.showOptions && (
+                  <div className="dropdown">
+                    <div>Edit</div>
+                    <div>Share</div>
+                    <div>Delete</div>
+                  </div>
                 )}
-                <FontAwesomeIcon icon={faEllipsisV} onClick={toggleDropdown} />
               </div>
               <div className="child-data">
-                {dummyDataVisible && (
+                {cardVisibility[ele._id]?.dummyDataVisible && (
                   <div>
-                    {/* Render your dummy data here */}
-                    <p>Dummy Data 1</p>
-                    <p>Dummy Data 2</p>
-                    <p>Dummy Data 3</p>
+                    {ele.task.map((task, index) => (
+                      <p key={index}>{task}</p>
+                    ))}
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          ))}
         </div>
         {showModal && <Modal closeModal={closeModal} />}
       </div>

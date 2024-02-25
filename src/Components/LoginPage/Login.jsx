@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="container-main">
       <div className="container">
         <div className="left-side">
           <div className='left-image'>
