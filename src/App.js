@@ -5,6 +5,7 @@ import Signup from "./Components/SignupPage/Signup";
 import Dashboardpage from "./pages/DashboardPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage";
+import ShareTodo from "./Components/Share/ShareTodo";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboardpage />} />
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/dashboard/:id" element={<ShareTodo />} />
 
 
     </Routes>

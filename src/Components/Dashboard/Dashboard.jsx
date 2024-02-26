@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import './dashboard.css'; // Import external CSS file
+import './dashboard.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faPlus, faBars, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
 import Modal from './Modal';
 import baseUrl from "../api";
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState('');
   const [childData, setChildData] = useState([]);
-  const [cardVisibility, setCardVisibility] = useState({}); // State for toggling individual card visibility
+  const [cardVisibility, setCardVisibility] = useState({});
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -26,16 +27,16 @@ const Dashboard = () => {
 
   useEffect(() => {
     try {
-      const id =localStorage.getItem("userId");
+      const id = localStorage.getItem("userId");
       const token = localStorage.getItem('token');
 
       const config = {
         headers: {
           'token': `bearer ${token}`,
-          'Content-Type': 'application/json' // Assuming your API expects JSON data
+          'Content-Type': 'application/json'
         }
       };
-      axios.get(`${baseUrl}/todo/getall/${id}`,config).then((res) => {
+      axios.get(`${baseUrl}/todo/getall/${id}`, config).then((res) => {
         // console.log(res.data);
         setChildData(res.data);
       });
@@ -43,6 +44,44 @@ const Dashboard = () => {
       console.log(error);
     }
   }, [childData]);
+
+  //delte toto api call
+  const handleDeleteTodo = async (id) => {
+    console.log(id);
+    try {
+      const token = localStorage.getItem('token');
+
+      const config = {
+        headers: {
+          'token': `bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      await axios.delete(`${baseUrl}/todo/delete/${id}`,config).then((res) => {
+        console.log(res.data);
+        if (res.status == 200) {
+          toast.success('Todo Deleted!')
+        }
+      });
+      // console.log("success");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  // share todo api call
+  const handleShareTodo = async (id) => {
+    const currentUrl = window.location.href;
+
+    // Append the ID to the current URL
+    const shareableLink = `${currentUrl}/${id}`;
+
+    // Copy the shareable link to the clipboard
+    await navigator.clipboard.writeText(shareableLink);
+    toast.success('Linked Copied!')
+
+    // console.log("Shareable link copied to clipboard:", shareableLink);
+
+  }
 
   const openModal = () => {
     setShowModal(true);
@@ -72,6 +111,14 @@ const Dashboard = () => {
     }));
   };
 
+  const handleCloseAllDropDown = () => {
+    const updatedVisibility = {};
+    for (const id in cardVisibility) {
+      updatedVisibility[id] = { ...cardVisibility[id], showOptions: false, dummyDataVisible: false };
+    }
+    setCardVisibility(updatedVisibility);
+  };
+
   const date = () => {
     const today = new Date();
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -80,6 +127,7 @@ const Dashboard = () => {
 
   return (
     <div className='main-container'>
+      <Toaster/>
       <div className="topbox">
         <div className='headText'>welcome {name && `${name}`}</div>
         <div className='headTime'>{date()}</div>
@@ -102,7 +150,7 @@ const Dashboard = () => {
             <h3>Todo</h3>
             <div className="card-buttons">
               <FontAwesomeIcon icon={faPlus} onClick={openModal} />
-              <FontAwesomeIcon icon={faBars} />
+              <FontAwesomeIcon icon={faBars} onClick={handleCloseAllDropDown} />
             </div>
           </div>
 
@@ -110,15 +158,23 @@ const Dashboard = () => {
             <div className="child-card" key={index}>
               <div className="card-header">
                 <h3>{ele.title}</h3>
+                <div className='child-data-button'>
+                  <div>{ele.dueDate}</div>
+                  <div>backlog</div>
+                  <div>progree</div>
+                  <div>done</div>
+
+                </div>
                 <div className="card-buttons">
                   <FontAwesomeIcon icon={cardVisibility[ele._id]?.dummyDataVisible ? faAngleUp : faAngleDown} onClick={() => toggleDummyData(ele._id)} />
                   <FontAwesomeIcon icon={faEllipsisV} onClick={() => togglethreedot(ele._id)} />
                 </div>
+                
                 {cardVisibility[ele._id]?.showOptions && (
                   <div className="dropdown">
                     <div>Edit</div>
-                    <div>Share</div>
-                    <div>Delete</div>
+                    <div onClick={() => handleShareTodo(ele._id)}>Share</div>
+                    <div onClick={() => handleDeleteTodo(ele._id)}>Delete</div>
                   </div>
                 )}
               </div>
@@ -126,7 +182,7 @@ const Dashboard = () => {
                 {cardVisibility[ele._id]?.dummyDataVisible && (
                   <div>
                     {ele.task.map((task, index) => (
-                      <p key={index}>{task}</p>
+                      <input type='text'  value={task} key={index}/>
                     ))}
                   </div>
                 )}

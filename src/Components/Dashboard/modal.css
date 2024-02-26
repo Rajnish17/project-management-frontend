@@ -17,6 +17,8 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   max-width: 600px;
   width: 80%;
+  overflow: auto; 
+  height: 500px;
 }
 
 .form-group {
@@ -35,24 +37,19 @@
   margin-bottom: 15px;
 }
 
-
-
-
 .add-button {
   color: black;
   border: none;
   cursor: pointer;
-
 }
 
-
-.last-container{
+.last-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.cancel-button{
+.cancel-button {
   width: 80px;
   height: 20px;
   padding: 10px;
@@ -63,10 +60,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
 }
 
-.save-button{
+.save-button {
   width: 80px;
   height: 20px;
   padding: 10px;
@@ -77,9 +73,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
 }
-
 
 .close-button {
   position: absolute;
@@ -87,5 +81,19 @@
   right: 10px;
   background: none;
   border: none;
+  cursor: pointer;
+}
+
+.task-group {
+  position: relative; 
+}
+
+
+
+.task-group .fa-trash {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
   cursor: pointer;
 }

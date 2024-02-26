@@ -11,6 +11,7 @@ const Sidebar = () => {
     try {
 
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       navigate("/");
 
     } catch (error) {

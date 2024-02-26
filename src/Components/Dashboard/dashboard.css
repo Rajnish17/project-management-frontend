@@ -107,3 +107,12 @@
     margin: 5px 0;
   }
   
+  /* child card button */
+
+  .child-data-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 95px;
+    width: 15px;
+  }

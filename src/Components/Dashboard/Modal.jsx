@@ -7,14 +7,9 @@ import baseUrl from "../api";
 
 const Modal = ({ closeModal }) => {
   const [title, setTitle] = useState('');
-  const [task, setTask] = useState('');
-  const [priority, setPriority] = useState('Medium');
+  const [priority, setPriority] = useState('low');
   const [dueDate, setDueDate] = useState('');
-  const [items, setItems] = useState([]);
-
-  const handleTaskChange = (e) => {
-    setTask(e.target.value);
-  };
+  const [tasks, setTasks] = useState([]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -29,31 +24,43 @@ const Modal = ({ closeModal }) => {
   };
 
   const handleAddTask = () => {
+    setTasks([...tasks, '']);
+  };
 
-    console.log(title, task, priority, dueDate);
+  const handleTaskChange = (index, e) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = e.target.value;
+    setTasks(updatedTasks);
+    
+  };
+
+  const handleDeleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
   };
 
   const handleSave = async () => {
     try {
-
       const token = localStorage.getItem('token');
+      // console.log(tasks);
 
       const config = {
         headers: {
           'token': `bearer ${token}`,
-          'Content-Type': 'application/json' // Assuming your API expects JSON data
+          'Content-Type': 'application/json'
         }
       };
-      
+
       const data = {
         title,
-        task,
+        task:tasks,
         priority,
         dueDate
       };
 
       const response = await axios.post(`${baseUrl}/todo/add`, data, config);
       closeModal();
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -73,24 +80,22 @@ const Modal = ({ closeModal }) => {
         </div>
         <div className="priority-group">
           <label>Priority:</label>
-          <div className="priority-buttons">
-            <div>low
-              <input type="radio" name="priority" value="low" onChange={handlePriorityChange} />
-            </div>
-            <div>medium
-              <input type="radio" name="priority" value="moderate" onChange={handlePriorityChange} />
-            </div>
-            <div>high
-              <input type="radio" name="priority" value="high" onChange={handlePriorityChange} />
-            </div>
-          </div>
+          <select value={priority} onChange={handlePriorityChange}>
+            <option value="Low">Low</option>
+            <option value="moderate">Medium</option>
+            <option value="high">High</option>
+          </select>
         </div>
 
-        <div className="add-button">
-          <div className="task-group">
-            <label>Task</label>
-            <input type="text" value={task} onChange={handleTaskChange} />
+        {tasks.map((task, index) => (
+          <div key={index} className="task-group">
+            <label>Task:</label>
+            <input type="text" value={task} onChange={(e) => handleTaskChange(index, e)} />
+            <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteTask(index)} />
           </div>
+        ))}
+
+        <div className="add-button">
           <div onClick={handleAddTask}>
             <FontAwesomeIcon icon={faPlus} /> Add New
           </div>
