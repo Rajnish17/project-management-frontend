@@ -1,33 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import './dashboard.css';
+import './dashboard.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faPlus, faBars, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
 import Modal from '../Modal/Modal';
 import baseUrl from "../api";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import BacklogCard from "..//card/BacklogCard"
-import DoneCard from "../card/DoneCard"
-import ProgressCard from "../card/ProgressCard"
-import TodoCard from "../card/TodoCard"
 
-const Dashboard = () => {
+const DoneCard = () => {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState('');
   const [childData, setChildData] = useState([]);
   const [cardVisibility, setCardVisibility] = useState({});
 
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    try {
-      axios.get(`${baseUrl}/user/getone/${userId}`).then((res) => {
-        // console.log(res.data.user.fullName);
-        setName(res.data.user.fullName);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+ 
 
   useEffect(() => {
     try {
@@ -61,9 +46,9 @@ const Dashboard = () => {
           'Content-Type': 'application/json'
         }
       };
-      await axios.delete(`${baseUrl}/todo/delete/${id}`, config).then((res) => {
+      await axios.delete(`${baseUrl}/todo/delete/${id}`,config).then((res) => {
         console.log(res.data);
-        if (res.status === 200) {
+        if (res.status == 200) {
           toast.success('Todo Deleted!')
         }
       });
@@ -130,38 +115,56 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='main-container'>
-      <Toaster />
-      <div className="topbox">
-        <div className='headText'>welcome {name && `${name}`}</div>
-        <div className='headTime'>{date()}</div>
-      </div>
-
-      <div className="head">
-        <div><h3>board</h3></div>
-        <div>
-          <select name="" id="">
-            <option value="">this week</option>
-            <option value="">this month</option>
-            <option value="">today</option>
-          </select>
+    <div className="parent-card">
+    <Toaster/>
+      <div className="first-card">
+        <div className="card-header">
+          <h3>Done</h3>
+          <div className="card-buttons">
+            <FontAwesomeIcon icon={faPlus} onClick={openModal} />
+            <FontAwesomeIcon icon={faBars} onClick={handleCloseAllDropDown} />
+          </div>
         </div>
+
+        {childData.map((ele, index) => (
+          <div className="child-card" key={index}>
+            <div className="card-header">
+              <h3>{ele.title}</h3>
+              <div className='child-data-button'>
+                <div>{new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
+                <div className='child-button'>backlog</div>
+                <div className='child-button'>progree</div>
+                <div className='child-button'>done</div>
+
+              </div>
+              <div className="card-buttons">
+                <FontAwesomeIcon icon={cardVisibility[ele._id]?.dummyDataVisible ? faAngleUp : faAngleDown} onClick={() => toggleDummyData(ele._id)} />
+                <FontAwesomeIcon icon={faEllipsisV} onClick={() => togglethreedot(ele._id)} />
+              </div>
+              
+              {cardVisibility[ele._id]?.showOptions && (
+                <div className="dropdown">
+                  <div>Edit</div>
+                  <div onClick={() => handleShareTodo(ele._id)}>Share</div>
+                  <div onClick={() => handleDeleteTodo(ele._id)}>Delete</div>
+                </div>
+              )}
+            </div>
+            <div className="child-data">
+              {cardVisibility[ele._id]?.dummyDataVisible && (
+                <div>
+                  {ele.task.map((task, index) => (
+                    <input type='text'  value={task} key={index}/>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
-
-      <div className="parent-card">
-        <div className="four-container">
-          
-          <BacklogCard />
-          <TodoCard/>
-          <ProgressCard />
-          <DoneCard />
-          
-        </div>
-      </div>
-
-
+      {showModal && <Modal closeModal={closeModal} />}
     </div>
   );
 };
 
-export default Dashboard;
+export default DoneCard;

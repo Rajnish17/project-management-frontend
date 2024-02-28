@@ -48,7 +48,7 @@ const ShareTodo = () => {
                 </div>
               ))}
             </div>
-            <p>Due Date {new Date(todo.dueDate).toLocaleDateString()}</p>
+            <p>Due Date:- {new Date(todo.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</p>
           </div>
         </div>
       ) : (

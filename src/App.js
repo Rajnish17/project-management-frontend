@@ -7,6 +7,7 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage";
 import ShareTodo from "./Components/Share/ShareTodo";
 
+
 function App() {
   return (
     <Routes>
@@ -16,6 +17,7 @@ function App() {
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/dashboard/:id" element={<ShareTodo />} />
+    
 
 
     </Routes>

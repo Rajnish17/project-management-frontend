@@ -45,11 +45,15 @@ const Setting = () => {
 
       // Send the request with updated data
       const response = await axios.put(`${baseUrl}/user/update/${userId}`, data);
-      console.log(response.data);
       setMessage(response.data.message);
+      setfullName('');
+      setNewPassword('');
+      setOldPassword("");
+      console.log(response.data.message);
     } catch (error) {
-      console.error('Error:', error);
-      setMessage('An error occurred. Please try again later.');
+      // console.error('Error:', error);
+      console.error(error.response.data.message);
+      setMessage(error.response.data.message);
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./Signup.css";
 import { Link, useNavigate } from 'react-router-dom';
-import Art from "../../utils/Art.jpg";
+import Art from "../../utils/Art.png";
 import axios from 'axios';
 import baseUrl from "../api"
 

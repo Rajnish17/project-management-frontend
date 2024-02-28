@@ -3,7 +3,7 @@ import './Login.css'; // Import external CSS file
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Import icons
-import Art from "../../utils/Art.jpg";
+import Art from "../../utils/Art.png";
 import baseUrl from '../api';
 import axios from 'axios';
 
