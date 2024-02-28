@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faPlus, faBars, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
+import { faEllipsisV, faPlus, faWindowRestore, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
 import Modal from '../Modal/Modal';
 import baseUrl from "../api";
 import axios from 'axios';
@@ -10,14 +10,13 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
-   
     const [childData, setChildData] = useState([]);
     const [cardVisibility, setCardVisibility] = useState({});
 
 
     useEffect(() => {
         try {
-            const id = localStorage.getItem("userId");
+            const userId = localStorage.getItem("userId");
             const token = localStorage.getItem('token');
 
             const config = {
@@ -26,7 +25,7 @@ const Dashboard = () => {
                     'Content-Type': 'application/json'
                 }
             };
-            axios.get(`${baseUrl}/todo/getall/${id}`, config).then((res) => {
+            axios.get(`${baseUrl}/todo/getall/${userId}`, config).then((res) => {
                 // console.log(res.data);
                 setChildData(res.data);
             });
@@ -40,7 +39,6 @@ const Dashboard = () => {
         console.log(id);
         try {
             const token = localStorage.getItem('token');
-
             const config = {
                 headers: {
                     'token': `bearer ${token}`,
@@ -109,7 +107,69 @@ const Dashboard = () => {
         setCardVisibility(updatedVisibility);
     };
 
-   
+    const handleBacklog = async(id) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const config = {
+                headers: {
+                    'token': `bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            await axios.post(`${baseUrl}/backlog/addtobacklog/${id}`, config).then((res) => {
+                console.log(res.data);
+                if (res.status === 200) {
+                    toast.success('Todo added to backlog!')
+                }
+            });
+            // console.log("success");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const handleDone = async(id) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const config = {
+                headers: {
+                    'token': `bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            await axios.post(`${baseUrl}/done/addtodone/${id}`, config).then((res) => {
+                console.log(res.data);
+                if (res.status === 200) {
+                    toast.success('Todo added to done!')
+                }
+            });
+            // console.log("success");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const handleProgress = async(id) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const config = {
+                headers: {
+                    'token': `bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            await axios.post(`${baseUrl}/progress/addtoprogress/${id}`, config).then((res) => {
+                console.log(res.data);
+                if (res.status === 200) {
+                    toast.success('Todo added to progress!')
+                }
+            });
+            // console.log("success");
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
 
@@ -122,7 +182,7 @@ const Dashboard = () => {
                     <h3>Todo</h3>
                     <div className="card-buttons">
                         <FontAwesomeIcon icon={faPlus} onClick={openModal} />
-                        <FontAwesomeIcon icon={faBars} onClick={handleCloseAllDropDown} />
+                        <FontAwesomeIcon icon={faWindowRestore} onClick={handleCloseAllDropDown} />
                     </div>
                 </div>
 
@@ -130,11 +190,12 @@ const Dashboard = () => {
                     <div className="child-card" key={index}>
                         <div className="card-header">
                             <h3>{ele.title}</h3>
+
                             <div className='child-data-button'>
-                                <div>{new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
-                                <div className='child-button'>backlog</div>
-                                <div className='child-button'>progree</div>
-                                <div className='child-button'>done</div>
+                                <div>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
+                                <div className='child-button' onClick={() => { handleBacklog(ele._id) }}>backlog</div>
+                                <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progree</div>
+                                <div className='child-button' onClick={() => { handleDone(ele._id) }}>done</div>
 
                             </div>
                             <div className="card-buttons">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faPlus, faBars, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
+import { faEllipsisV, faPlus, faWindowRestore , faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
 import Modal from '../Modal/Modal';
 import baseUrl from "../api";
 import axios from 'axios';
@@ -25,7 +25,7 @@ const DoneCard = () => {
           'Content-Type': 'application/json'
         }
       };
-      axios.get(`${baseUrl}/todo/getall/${id}`, config).then((res) => {
+      axios.get(`${baseUrl}/done/getall/${id}`, config).then((res) => {
         // console.log(res.data);
         setChildData(res.data);
       });
@@ -36,7 +36,7 @@ const DoneCard = () => {
 
   //delte toto api call
   const handleDeleteTodo = async (id) => {
-    console.log(id);
+   
     try {
       const token = localStorage.getItem('token');
 
@@ -46,13 +46,10 @@ const DoneCard = () => {
           'Content-Type': 'application/json'
         }
       };
-      await axios.delete(`${baseUrl}/todo/delete/${id}`,config).then((res) => {
+      await axios.delete(`${baseUrl}/done/delete/${id}`,config).then((res) => {
         console.log(res.data);
-        if (res.status == 200) {
-          toast.success('Todo Deleted!')
-        }
+        toast.success('Done todo Deleted!')
       });
-      // console.log("success");
     } catch (error) {
       console.log(error);
     }
@@ -60,15 +57,9 @@ const DoneCard = () => {
   // share todo api call
   const handleShareTodo = async (id) => {
     const currentUrl = window.location.href;
-
-    // Append the ID to the current URL
     const shareableLink = `${currentUrl}/${id}`;
-
-    // Copy the shareable link to the clipboard
     await navigator.clipboard.writeText(shareableLink);
     toast.success('Linked Copied!')
-
-    // console.log("Shareable link copied to clipboard:", shareableLink);
 
   }
 
@@ -108,11 +99,7 @@ const DoneCard = () => {
     setCardVisibility(updatedVisibility);
   };
 
-  const date = () => {
-    const today = new Date();
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return today.toLocaleDateString(undefined, options);
-  };
+  
 
   return (
     <div className="parent-card">
@@ -122,7 +109,7 @@ const DoneCard = () => {
           <h3>Done</h3>
           <div className="card-buttons">
             <FontAwesomeIcon icon={faPlus} onClick={openModal} />
-            <FontAwesomeIcon icon={faBars} onClick={handleCloseAllDropDown} />
+            <FontAwesomeIcon icon={faWindowRestore } onClick={handleCloseAllDropDown} />
           </div>
         </div>
 
@@ -131,7 +118,7 @@ const DoneCard = () => {
             <div className="card-header">
               <h3>{ele.title}</h3>
               <div className='child-data-button'>
-                <div>{new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
+                <div>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
                 <div className='child-button'>backlog</div>
                 <div className='child-button'>progree</div>
                 <div className='child-button'>done</div>

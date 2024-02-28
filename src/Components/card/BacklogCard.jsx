@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faPlus, faBars, faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
+import { faEllipsisV, faPlus, faWindowRestore , faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'; // Add the required icons
 import Modal from '../Modal/Modal';
 import baseUrl from "../api";
 import axios from 'axios';
@@ -25,7 +25,7 @@ const BacklogCard = () => {
           'Content-Type': 'application/json'
         }
       };
-      axios.get(`${baseUrl}/todo/getall/${id}`, config).then((res) => {
+      axios.get(`${baseUrl}/backlog/getall/${id}`, config).then((res) => {
         // console.log(res.data);
         setChildData(res.data);
       });
@@ -46,13 +46,12 @@ const BacklogCard = () => {
           'Content-Type': 'application/json'
         }
       };
-      await axios.delete(`${baseUrl}/todo/delete/${id}`,config).then((res) => {
-        console.log(res.data);
-        if (res.status == 200) {
-          toast.success('Todo Deleted!')
-        }
+      await axios.delete(`${baseUrl}/backlog/delete/${id}`,config).then((res) => {
+        // console.log(res.data);
+        toast.success('Backlog Deleted!')
+        
       });
-      // console.log("success");
+     
     } catch (error) {
       console.log(error);
     }
@@ -60,15 +59,9 @@ const BacklogCard = () => {
   // share todo api call
   const handleShareTodo = async (id) => {
     const currentUrl = window.location.href;
-
-    // Append the ID to the current URL
     const shareableLink = `${currentUrl}/${id}`;
-
-    // Copy the shareable link to the clipboard
     await navigator.clipboard.writeText(shareableLink);
     toast.success('Linked Copied!')
-
-    // console.log("Shareable link copied to clipboard:", shareableLink);
 
   }
 
@@ -108,11 +101,7 @@ const BacklogCard = () => {
     setCardVisibility(updatedVisibility);
   };
 
-  const date = () => {
-    const today = new Date();
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return today.toLocaleDateString(undefined, options);
-  };
+
 
   return (
     <div className="parent-card">
@@ -122,7 +111,7 @@ const BacklogCard = () => {
             <h3>Backlog</h3>
             <div className="card-buttons">
               <FontAwesomeIcon icon={faPlus} onClick={openModal} />
-              <FontAwesomeIcon icon={faBars} onClick={handleCloseAllDropDown} />
+              <FontAwesomeIcon icon={faWindowRestore} onClick={handleCloseAllDropDown} />
             </div>
           </div>
 
@@ -131,7 +120,7 @@ const BacklogCard = () => {
               <div className="card-header">
                 <h3>{ele.title}</h3>
                 <div className='child-data-button'>
-                  <div>{new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
+                  <div>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
                   <div className='child-button'>backlog</div>
                   <div className='child-button'>progree</div>
                   <div className='child-button'>done</div>

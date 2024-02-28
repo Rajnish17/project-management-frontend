@@ -31,7 +31,6 @@ const Modal = ({ closeModal }) => {
     const updatedTasks = [...tasks];
     updatedTasks[index] = e.target.value;
     setTasks(updatedTasks);
-    
   };
 
   const handleDeleteTask = (index) => {
@@ -42,7 +41,8 @@ const Modal = ({ closeModal }) => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('token');
-      // console.log(tasks);
+      // Check if dueDate is empty and set it to null
+      const formattedDueDate = dueDate !== '' ? dueDate : null;
 
       const config = {
         headers: {
@@ -53,9 +53,9 @@ const Modal = ({ closeModal }) => {
 
       const data = {
         title,
-        task:tasks,
+        task: tasks,
         priority,
-        dueDate
+        dueDate: formattedDueDate
       };
 
       const response = await axios.post(`${baseUrl}/todo/add`, data, config);

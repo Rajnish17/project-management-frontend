@@ -1,20 +1,38 @@
-// Analytics.js
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Analytics.css';
+import axios from 'axios';
+import baseUrl from "../api"
 
 const Analytics = () => {
+  const [task, setTask] = useState("")
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    try {
+      axios.get(`${baseUrl}/alltask/${userId}`).then((res) => {
+        setTask(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [task]);
+
   return (
     <div className="analytics">
       <h2 className="heading">Analytics</h2>
       <div className="cards">
         <div className="card">
-          <h3>Card 1</h3>
-          <p>This is the content of card 1.</p>
+          <h3>Backlog Tasks {task.backlog}</h3>
+          <h3>To-do Tasks {task.todo}</h3>
+          <h3>in-Progress Tasks {task.progress}</h3>
+          <h3>Completed Tasks {task.done}</h3>
         </div>
         <div className="card">
-          <h3>Card 2</h3>
-          <p>This is the content of card 2.</p>
+
+          <h3>Low Priority {task.lowPriority}</h3>
+          <h3>Moderate Priority {task.moderatePriority}</h3>
+          <h3>High Priority {task.highPriority}</h3>
+          {/* <h3>Due Date Tasks</h3> */}
         </div>
       </div>
     </div>
