@@ -82,7 +82,7 @@ const Modal = ({ closeModal }) => {
           <label>Priority:</label>
           <select value={priority} onChange={handlePriorityChange}>
             <option value="Low">Low</option>
-            <option value="moderate">Medium</option>
+            <option value="moderate">Moderate</option>
             <option value="high">High</option>
           </select>
         </div>

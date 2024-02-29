@@ -112,7 +112,7 @@ const Setting = () => {
         </div>
 
       </div>
-      {message && <p>{message}</p>}
+      {message && <p className='error-message'>{message}</p>}
       <button className="update-button" onClick={handleUpdate}>Update</button>
     </div>
   );

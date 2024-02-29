@@ -62,13 +62,8 @@ const Dashboard = () => {
 
         // Append the ID to the current URL
         const shareableLink = `${currentUrl}/${id}`;
-
-        // Copy the shareable link to the clipboard
         await navigator.clipboard.writeText(shareableLink);
         toast.success('Linked Copied!')
-
-        // console.log("Shareable link copied to clipboard:", shareableLink);
-
     }
 
     const openModal = () => {
@@ -107,7 +102,7 @@ const Dashboard = () => {
         setCardVisibility(updatedVisibility);
     };
 
-    const handleBacklog = async(id) => {
+    const handleBacklog = async (id) => {
         try {
             const token = localStorage.getItem('token');
 
@@ -128,7 +123,7 @@ const Dashboard = () => {
             console.log(error);
         }
     }
-    const handleDone = async(id) => {
+    const handleDone = async (id) => {
         try {
             const token = localStorage.getItem('token');
 
@@ -149,7 +144,7 @@ const Dashboard = () => {
             console.log(error);
         }
     }
-    const handleProgress = async(id) => {
+    const handleProgress = async (id) => {
         try {
             const token = localStorage.getItem('token');
 
@@ -176,6 +171,7 @@ const Dashboard = () => {
 
 
         <div className="parent-card">
+            <Toaster />
 
             <div className="first-card">
                 <div className="card-header">
@@ -188,16 +184,11 @@ const Dashboard = () => {
 
                 {childData.map((ele, index) => (
                     <div className="child-card" key={index}>
+                         <span className={`todo-priority ${ele.priority}`}>{ele.priority.toUpperCase()} PRIORITY </span>
                         <div className="card-header">
                             <h3>{ele.title}</h3>
 
-                            <div className='child-data-button'>
-                                <div>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
-                                <div className='child-button' onClick={() => { handleBacklog(ele._id) }}>backlog</div>
-                                <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progree</div>
-                                <div className='child-button' onClick={() => { handleDone(ele._id) }}>done</div>
 
-                            </div>
                             <div className="card-buttons">
                                 <FontAwesomeIcon icon={cardVisibility[ele._id]?.dummyDataVisible ? faAngleUp : faAngleDown} onClick={() => toggleDummyData(ele._id)} />
                                 <FontAwesomeIcon icon={faEllipsisV} onClick={() => togglethreedot(ele._id)} />
@@ -213,12 +204,19 @@ const Dashboard = () => {
                         </div>
                         <div className="child-data">
                             {cardVisibility[ele._id]?.dummyDataVisible && (
-                                <div>
+                                <div className='child-input'>
                                     {ele.task.map((task, index) => (
                                         <input type='text' value={task} key={index} />
                                     ))}
                                 </div>
                             )}
+                        </div>
+                        <div className='child-data-button'>
+                            <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
+                            <div className='child-button' onClick={() => { handleBacklog(ele._id) }}>backlog</div>
+                            <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progree</div>
+                            <div className='child-button' onClick={() => { handleDone(ele._id) }}>done</div>
+
                         </div>
                     </div>
                 ))}

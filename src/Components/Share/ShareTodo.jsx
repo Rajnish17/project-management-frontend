@@ -13,7 +13,7 @@ const ShareTodo = () => {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/todo/getone/${id}`);
+        const response = await axios.get(`${baseUrl}/share/${id}`);
         setTodo(response.data.task); 
       } catch (error) {
         setError('Error fetching todo');
@@ -48,7 +48,7 @@ const ShareTodo = () => {
                 </div>
               ))}
             </div>
-            <p>{(todo.dueDate) && `Due Date:- ${new Date(todo.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}`}</p>
+            <p className={`todo-priority ${todo.priority}`}>{(todo.dueDate) && `Due Date:- ${new Date(todo.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}`}</p>
 
           </div>
         </div>
