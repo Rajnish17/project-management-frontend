@@ -6,10 +6,12 @@ import Modal from '../Modal/Modal';
 import baseUrl from "../api";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import DeleteModal from "./DeleteModal"
 
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setshowDeleteModal] = useState(false);
     const [childData, setChildData] = useState([]);
     const [cardVisibility, setCardVisibility] = useState({});
 
@@ -101,7 +103,7 @@ const Dashboard = () => {
         }
         setCardVisibility(updatedVisibility);
     };
-
+//add to backlog from todo
     const handleBacklog = async (id) => {
         try {
             const token = localStorage.getItem('token');
@@ -112,17 +114,17 @@ const Dashboard = () => {
                     'Content-Type': 'application/json'
                 }
             };
-            await axios.post(`${baseUrl}/backlog/addtobacklog/${id}`, config).then((res) => {
+            await axios.post(`${baseUrl}/todo/backlog/${id}`, config).then((res) => {
                 console.log(res.data);
-                if (res.status === 200) {
-                    toast.success('Todo added to backlog!')
-                }
+                toast.success('Todo added to backlog!')
+               
             });
             // console.log("success");
         } catch (error) {
             console.log(error);
         }
     }
+// add to done from todo
     const handleDone = async (id) => {
         try {
             const token = localStorage.getItem('token');
@@ -133,17 +135,17 @@ const Dashboard = () => {
                     'Content-Type': 'application/json'
                 }
             };
-            await axios.post(`${baseUrl}/done/addtodone/${id}`, config).then((res) => {
+            await axios.post(`${baseUrl}/todo/done/${id}`, config).then((res) => {
                 console.log(res.data);
-                if (res.status === 200) {
-                    toast.success('Todo added to done!')
-                }
+                toast.success('Todo added to done!')
+               
             });
             // console.log("success");
         } catch (error) {
             console.log(error);
         }
     }
+    //add to progress from todo
     const handleProgress = async (id) => {
         try {
             const token = localStorage.getItem('token');
@@ -154,16 +156,20 @@ const Dashboard = () => {
                     'Content-Type': 'application/json'
                 }
             };
-            await axios.post(`${baseUrl}/progress/addtoprogress/${id}`, config).then((res) => {
+            await axios.post(`${baseUrl}/todo/progress/${id}`, config).then((res) => {
                 console.log(res.data);
-                if (res.status === 200) {
-                    toast.success('Todo added to progress!')
-                }
+                toast.success('Todo added to progress!')
+               
             });
             // console.log("success");
         } catch (error) {
             console.log(error);
         }
+    }
+
+    //Edit Todo
+    const handleEditTodo =(id)=>{
+           console.log(id);
     }
 
     return (
@@ -196,7 +202,7 @@ const Dashboard = () => {
 
                             {cardVisibility[ele._id]?.showOptions && (
                                 <div className="dropdown">
-                                    <div>Edit</div>
+                                    {/* <div onClick={() => handleEditTodo(ele._id)} >Edit</div> */}
                                     <div onClick={() => handleShareTodo(ele._id)}>Share</div>
                                     <div onClick={() => handleDeleteTodo(ele._id)}>Delete</div>
                                 </div>

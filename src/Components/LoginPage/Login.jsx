@@ -6,6 +6,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Import
 import Art from "../../utils/Art.png";
 import baseUrl from '../api';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const [password, setPassword] = useState('');
@@ -28,6 +29,7 @@ const Login = () => {
       
       localStorage.setItem("token",token);
       localStorage.setItem("userId",_id);
+      toast.success("login success");
       setTimeout(()=>{
         navigate("/dashboard");
       },1000)
@@ -46,6 +48,7 @@ const Login = () => {
 
   return (
     <div className="container-main">
+      <Toaster/>
       <div className="container">
         <div className="left-side">
           <div className='left-image'>

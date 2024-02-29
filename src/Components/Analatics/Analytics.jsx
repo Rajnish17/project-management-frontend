@@ -20,8 +20,12 @@ const Analytics = () => {
   return (
     <div className="analytics">
       <h2 className="heading">Analytics</h2>
-      <div className="cards">
-        <div className="card">
+      
+
+        {
+          task ? (
+            <div className="cards">
+            <div className="card">
           <h3>Backlog Tasks {task.backlog}</h3>
           <h3>To-do Tasks {task.todo}</h3>
           <h3>in-Progress Tasks {task.progress}</h3>
@@ -34,8 +38,11 @@ const Analytics = () => {
           <h3>High Priority {task.highPriority}</h3>
           {/* <h3>Due Date Tasks</h3> */}
         </div>
+        </div>
+          ) : (<div className='loading'>Loading...</div>)
+        }
       </div>
-    </div>
+    
   );
 };
 

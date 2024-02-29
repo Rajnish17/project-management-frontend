@@ -5,10 +5,13 @@ import { faEllipsisV, faWindowRestore , faAngleDown, faAngleUp } from '@fortawes
 import baseUrl from "../api";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import Modal from "../EditModal/EditModal"
 
 const BacklogCard = () => {
   const [childData, setChildData] = useState([]);
   const [cardVisibility, setCardVisibility] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [editItemId, setEditItemId] = useState(null);
 
  
 
@@ -93,6 +96,76 @@ const BacklogCard = () => {
   };
 
 
+  //add to todo from backlog
+  const handleTodo = async (id) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                'token': `bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+        await axios.post(`${baseUrl}/backlog/todo/${id}`, config).then((res) => {
+            console.log(res.data);
+            toast.success('Todo added to Todo!')
+           
+        });
+        // console.log("success");
+    } catch (error) {
+        console.log(error);
+    }
+}
+// add to done from backlog
+const handleDone = async (id) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                'token': `bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+        await axios.post(`${baseUrl}/backlog/done/${id}`, config).then((res) => {
+            console.log(res.data);
+            toast.success('Todo added to done!')
+           
+        });
+        // console.log("success");
+    } catch (error) {
+        console.log(error);
+    }
+}
+//add to progress from backlog
+const handleProgress = async (id) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                'token': `bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
+        await axios.post(`${baseUrl}/backlog/progress/${id}`, config).then((res) => {
+            console.log(res.data);
+            toast.success('Todo added to progress!')
+           
+        });
+        // console.log("success");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const handleEditTodo =(id)=>{
+  setEditItemId(id); 
+  setShowModal(true);
+}
+
 
   return (
     <div className="parent-card">
@@ -118,7 +191,7 @@ const BacklogCard = () => {
                 
                 {cardVisibility[ele._id]?.showOptions && (
                   <div className="dropdown">
-                    <div>Edit</div>
+                    <div onClick={() => handleEditTodo(ele._id)} >Edit</div>
                     <div onClick={() => handleShareTodo(ele._id)}>Share</div>
                     <div onClick={() => handleDeleteTodo(ele._id)}>Delete</div>
                   </div>
@@ -135,16 +208,16 @@ const BacklogCard = () => {
               </div>
 
               <div className='child-data-button'>
-                  <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
-                  <div className='child-button'>backlog</div>
-                  <div className='child-button'>progree</div>
-                  <div className='child-button'>done</div>
+                            <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
+                            <div className='child-button' onClick={() => { handleTodo(ele._id) }}>Todo</div>
+                            <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progree</div>
+                            <div className='child-button' onClick={() => { handleDone(ele._id) }}>done</div>
 
-                </div>
+                        </div>
             </div>
           ))}
         </div>
-  
+        {showModal && <Modal closeModal={() => setShowModal(false)} itemId={editItemId} />}
       </div>
       
       

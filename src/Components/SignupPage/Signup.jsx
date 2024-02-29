@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Art from "../../utils/Art.png";
 import axios from 'axios';
 import baseUrl from "../api"
+import toast,{Toaster} from 'react-hot-toast';
 
 const Signup = () => {
   const [fullName, setfullName] = useState('');
@@ -30,6 +31,7 @@ const Signup = () => {
       });
 
       if (response.data.success) {
+        toast.success("signup success");
         navigate("/");
         return;
       }
@@ -42,6 +44,7 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
+      <Toaster/>
       <div className="container-signup-form">
         <div className="left-side">
           <div className='left-image'>

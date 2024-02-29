@@ -91,6 +91,72 @@ const DoneCard = () => {
     setCardVisibility(updatedVisibility);
   };
 
+
+     //add to backlog from done
+     const handleBacklog = async (id) => {
+      try {
+          const token = localStorage.getItem('token');
+  
+          const config = {
+              headers: {
+                  'token': `bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          };
+          await axios.post(`${baseUrl}/done/backlog/${id}`, config).then((res) => {
+              console.log(res.data);
+             
+                  toast.success('Todo added to backlog!')
+              
+          });
+          // console.log("success");
+      } catch (error) {
+          console.log(error);
+      }
+  }
+  // add to progress from done
+  const handleprogress = async (id) => {
+      try {
+          const token = localStorage.getItem('token');
+  
+          const config = {
+              headers: {
+                  'token': `bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          };
+          await axios.post(`${baseUrl}/done/progress/${id}`, config).then((res) => {
+              console.log(res.data);
+              toast.success('Todo added to Progress!')
+              
+          });
+          // console.log("success");
+      } catch (error) {
+          console.log(error);
+      }
+  }
+  //add to todo from done
+  const handleTodo = async (id) => {
+      try {
+          const token = localStorage.getItem('token');
+  
+          const config = {
+              headers: {
+                  'token': `bearer ${token}`,
+                  'Content-Type': 'application/json'
+              }
+          };
+          await axios.post(`${baseUrl}/done/todo/${id}`, config).then((res) => {
+              console.log(res.data);
+              toast.success('Todo added to Todo!')
+             
+          });
+          // console.log("success");
+      } catch (error) {
+          console.log(error);
+      }
+  }
+ 
   
 
   return (
@@ -117,7 +183,7 @@ const DoneCard = () => {
               
               {cardVisibility[ele._id]?.showOptions && (
                 <div className="dropdown">
-                  <div>Edit</div>
+                  {/* <div>Edit</div> */}
                   <div onClick={() => handleShareTodo(ele._id)}>Share</div>
                   <div onClick={() => handleDeleteTodo(ele._id)}>Delete</div>
                 </div>
@@ -133,13 +199,13 @@ const DoneCard = () => {
               )}
             </div>
             <div className='child-data-button'>
-                <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', {day: '2-digit',month: 'short' })}</div>
-                <div className='child-button'>backlog</div>
-                <div className='child-button'>progree</div>
-                <div className='child-button'>done</div>
+                            <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
+                            <div className='child-button' onClick={() => { handleBacklog(ele._id) }}>Backlog</div>
+                            <div className='child-button' onClick={() => { handleTodo(ele._id) }}>Todo</div>
+                            <div className='child-button' onClick={() => { handleprogress(ele._id) }}>Progress</div>
 
-              </div>
-          </div>
+                        </div>
+                    </div>
         ))}
       </div>
     </div>

@@ -5,7 +5,7 @@ import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import baseUrl from "../api";
 
-const Modal = ({ closeModal }) => {
+const EditModal = ({ closeModal,itemId }) => {
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState('low');
   const [dueDate, setDueDate] = useState('');
@@ -26,6 +26,7 @@ const Modal = ({ closeModal }) => {
 
   const handleAddTask = () => {
     setTasks([...tasks, '']);
+    console.log(itemId);
   };
 
   const handleTaskChange = (index, e) => {
@@ -69,7 +70,7 @@ const Modal = ({ closeModal }) => {
         dueDate: formattedDueDate
       };
 
-      const response = await axios.post(`${baseUrl}/todo/add`, data, config);
+      const response = await axios.put(`${baseUrl}/backlog/update/${itemId}`, data, config);
       closeModal();
       console.log(response);
     } catch (error) {
@@ -126,4 +127,4 @@ const Modal = ({ closeModal }) => {
   );
 };
 
-export default Modal;
+export default EditModal;
