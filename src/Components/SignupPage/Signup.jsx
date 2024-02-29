@@ -31,8 +31,10 @@ const Signup = () => {
       });
 
       if (response.data.success) {
-        toast.success("signup success");
-        navigate("/");
+        toast.success("signup success",{ duration: 1000 });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
         return;
       }
 

@@ -56,7 +56,7 @@ const Modal = ({ closeModal }) => {
         return;
       }
   
-      if (tasks.length === 0) {
+      if (tasks.length === 0 || tasks[0] === "") {
         setError("Please add at least one task");
         return;
       }   

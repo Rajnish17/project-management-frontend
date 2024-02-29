@@ -77,15 +77,48 @@ const BacklogCard = () => {
     }));
   };
 
+  //close three dot close anywhere
+ 
+
+  // const togglethreedot = (id) => {
+  //   setCardVisibility(prevState => ({
+  //     ...prevState,
+  //     [id]: {
+  //       ...prevState[id],
+  //       showOptions: !prevState[id]?.showOptions
+  //     }
+  //   }));
+  // };
+
   const togglethreedot = (id) => {
-    setCardVisibility(prevState => ({
-      ...prevState,
+    const newVisibility = {
+      ...cardVisibility,
       [id]: {
-        ...prevState[id],
-        showOptions: !prevState[id]?.showOptions
+        ...cardVisibility[id],
+        showOptions: !cardVisibility[id]?.showOptions
       }
-    }));
+    };
+    setCardVisibility(newVisibility);
+  
+    // Close three dots menu when clicking outside
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.child-card')) {
+        setCardVisibility(prevState => ({
+          ...prevState,
+          [id]: {
+            ...prevState[id],
+            showOptions: false
+          }
+        }));
+        document.removeEventListener('click', handleClickOutside);
+      }
+    };
+  
+    if (newVisibility[id]?.showOptions) {
+      document.addEventListener('click', handleClickOutside);
+    }
   };
+  
 
   const handleCloseAllDropDown = () => {
     const updatedVisibility = {};
@@ -183,19 +216,27 @@ const handleEditTodo =(id)=>{
                 <span className={`todo-priority ${ele.priority}`}>{ele.priority.toUpperCase()} PRIORITY </span>
               <div className="card-header">
                 <h3>{ele.title}</h3>
+
+                
                
                 <div className="card-buttons">
                   <FontAwesomeIcon icon={cardVisibility[ele._id]?.dummyDataVisible ? faAngleUp : faAngleDown} onClick={() => toggleDummyData(ele._id)} />
                   <FontAwesomeIcon icon={faEllipsisV} onClick={() => togglethreedot(ele._id)} />
-                </div>
-                
-                {cardVisibility[ele._id]?.showOptions && (
+                 
+                  {cardVisibility[ele._id]?.showOptions && (
                   <div className="dropdown">
                     <div onClick={() => handleEditTodo(ele._id)} >Edit</div>
                     <div onClick={() => handleShareTodo(ele._id)}>Share</div>
                     <div onClick={() => handleDeleteTodo(ele._id)}>Delete</div>
                   </div>
                 )}
+
+                </div>
+                
+                 
+                  
+                
+               
               </div>
               <div className="child-data">
                 {cardVisibility[ele._id]?.dummyDataVisible && (

@@ -29,7 +29,7 @@ const Login = () => {
       
       localStorage.setItem("token",token);
       localStorage.setItem("userId",_id);
-      toast.success("login success");
+      toast.success("login success",{duration:1000});
       setTimeout(()=>{
         navigate("/dashboard");
       },1000)
