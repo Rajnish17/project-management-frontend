@@ -11,10 +11,12 @@ const ShareTodo = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+  
+
     const fetchTodo = async () => {
       try {
         const response = await axios.get(`${baseUrl}/share/${id}`);
-        setTodo(response.data.task); 
+        setTodo(response.data.task);
       } catch (error) {
         setError('Error fetching todo');
         console.error('Error fetching todo:', error);
@@ -36,6 +38,7 @@ const ShareTodo = () => {
 
   return (
     <div className='todo-container'>
+      <h3>Pro Manage</h3>
       {todo ? (
         <div className='todo-card'>
           <div className="todo-card-item">
