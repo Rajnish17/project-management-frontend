@@ -7,38 +7,43 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from "../EditModal/EditModal"
 
-const BacklogCard = ({ filter }) => {
+const BacklogCard = ({filter}) => {
   const [childData, setChildData] = useState([]);
   const [cardVisibility, setCardVisibility] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [editItemId, setEditItemId] = useState(null);
 
+ 
+  console.log(filter);
+
 
   useEffect(() => {
+    fetchData();
+    // console.log(filter)
+  }, [childData]);
+
+  const fetchData = async () => {
     try {
       const id = localStorage.getItem("userId");
       const token = localStorage.getItem('token');
-
+  
       const config = {
         headers: {
           'token': `bearer ${token}`,
           'Content-Type': 'application/json'
         }
       };
-      axios.get(`${baseUrl}/backlog/getall/${id}`, config).then((res) => {
-        // console.log(res.data);
-        setChildData(res.data);
-
-      });
+      const response = await axios.get(`${baseUrl}/backlog/getall/${id}`, config);
+      setChildData(response.data);
     } catch (error) {
       console.log(error);
     }
-  }, [childData]);
+  };
 
 
   //delte toto api call
   const handleDeleteTodo = async (id) => {
-    console.log(id);
+    // console.log(id);
     try {
       const token = localStorage.getItem('token');
 

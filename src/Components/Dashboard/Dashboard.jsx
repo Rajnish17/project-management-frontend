@@ -10,7 +10,7 @@ import TodoCard from "../card/TodoCard";
 
 const Dashboard = () => {
   const [name, setName] = useState('');
-  const[filter,setFilter]=useState("week");
+  const[Filter,setFilter]=useState("");
 
   
 
@@ -44,7 +44,7 @@ const Dashboard = () => {
       <div className="head">
         <div><h3>board</h3></div>
         <div>
-        <select value={filter} onChange={(e)=>{setFilter(e.target.value)}}>
+        <select onChange={(e)=>{setFilter(e.target.value)}}>
         <option value="week">this week</option>
         <option value="today">today</option>
         <option value="month">this month</option>
@@ -54,7 +54,7 @@ const Dashboard = () => {
 
       <div className="parent-card">
         <div className="four-container">
-          <BacklogCard filter={filter} />
+          <BacklogCard filter={Filter} />
           <TodoCard/>
           <ProgressCard />
           <DoneCard />
