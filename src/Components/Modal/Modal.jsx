@@ -80,9 +80,7 @@ const Modal = ({ closeModal }) => {
   return (
     <div className="modal-overlay">
       <div className="modal rtl">
-        <button className="close-button" onClick={closeModal}>
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
+        
 
         <h2>Add Item</h2>
         <div className="form-group">

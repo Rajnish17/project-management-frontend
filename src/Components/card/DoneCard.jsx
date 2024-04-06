@@ -55,7 +55,7 @@ const DoneCard = () => {
   // share todo api call
   const handleShareTodo = async (id) => {
     const currentUrl = window.location.href;
-    const shareableLink = `${currentUrl}/${id}`;
+    const shareableLink = `${currentUrl}/share/${id}`;
     await navigator.clipboard.writeText(shareableLink);
     toast.success('Linked Copied!')
 

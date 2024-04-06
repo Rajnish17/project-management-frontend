@@ -16,7 +16,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboardpage />} />
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path="/settings" element={<SettingsPage />} />
-      <Route path="/dashboard/:id" element={<ShareTodo />} />
+      <Route path="/dashboard/share/:id" element={<ShareTodo />} />
     
 
 

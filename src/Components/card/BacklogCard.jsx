@@ -7,19 +7,19 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from "../EditModal/EditModal"
 
-const BacklogCard = ({filter}) => {
+const BacklogCard = (props) => {
   const [childData, setChildData] = useState([]);
   const [cardVisibility, setCardVisibility] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [editItemId, setEditItemId] = useState(null);
 
  
-  console.log(filter);
 
 
   useEffect(() => {
     fetchData();
-    // console.log(filter)
+  // console.log(props.filter);
+    
   }, [childData]);
 
   const fetchData = async () => {
@@ -66,7 +66,7 @@ const BacklogCard = ({filter}) => {
   // share todo api call
   const handleShareTodo = async (id) => {
     const currentUrl = window.location.href;
-    const shareableLink = `${currentUrl}/${id}`;
+    const shareableLink = `${currentUrl}/share/${id}`;
     await navigator.clipboard.writeText(shareableLink);
     toast.success('Linked Copied!')
 
