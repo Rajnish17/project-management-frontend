@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from "./PrivateRoute";
-import Login from "../Components/LoginPage/Login";
-import Signup from "../Components/SignupPage/Signup";
+import Login from "../Components/Auth/Login";
+import Signup from "../Components/Auth/Signup";
 import Dashboardpage from "../pages/DashboardPage";
 import AnalyticsPage from "../pages/AnalyticsPage";
 import SettingsPage from "../pages/SettingsPage";
