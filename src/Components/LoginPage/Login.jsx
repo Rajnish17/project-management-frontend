@@ -26,7 +26,7 @@ const Login = () => {
 
       localStorage.setItem("token", token);
       localStorage.setItem("userId", _id);
-      toast.success("Login success", { duration: 1000 });
+      toast.success("Login success");
       
       setTimeout(() => {
         navigate("/dashboard");
