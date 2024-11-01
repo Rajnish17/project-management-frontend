@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import './setting.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import baseUrl from "../api"
-import axios from "axios"
+import baseUrl from "../api";
+import axios from "axios";
 
 const Setting = () => {
   const [fullName, setfullName] = useState('');
@@ -20,6 +19,7 @@ const Setting = () => {
       setShowNewPassword(!showNewPassword);
     }
   };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setMessage(''); // Reset message
@@ -48,72 +48,69 @@ const Setting = () => {
       setMessage(response.data.message);
       setfullName('');
       setNewPassword('');
-      setOldPassword("");
+      setOldPassword('');
       console.log(response.data.message);
     } catch (error) {
-      // console.error('Error:', error);
       console.error(error.response.data.message);
       setMessage(error.response.data.message);
     }
   };
 
   return (
-    <div className="settings">
-      <h2>Settings</h2>
+    <div className="settings p-6 bg-white rounded-lg shadow-md max-w-2xl mx-auto"> {/* Increased max-width */}
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Settings</h2>
 
-      <div className="input-group">
-
-        <div className="input-icon">
-
-          <input
-            type="text"
-            id="name"
-            placeholder="Name"
-            value={fullName}
-            onChange={(e) => setfullName(e.target.value)}
-          />
-        </div>
-
+      <div className="input-group mb-4">
+        <input
+          type="text"
+          id="name"
+          placeholder="Name"
+          value={fullName}
+          onChange={(e) => setfullName(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+        />
       </div>
 
-      <div className="input-group">
-
-        <div className="input-icon">
-          <input
-            type={showOldPassword ? 'text' : 'password'}
-            id="oldPassword"
-            placeholder="Old Password"
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-          />
-          <FontAwesomeIcon
-            icon={showOldPassword ? faEyeSlash : faEye}
-            onClick={() => toggleShowPassword('old')}
-            className="password-icon"
-          />
-        </div>
+      <div className="input-group mb-4 relative">
+        <input
+          type={showOldPassword ? 'text' : 'password'}
+          id="oldPassword"
+          placeholder="Old Password"
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+        />
+        <FontAwesomeIcon
+          icon={showOldPassword ? faEyeSlash : faEye}
+          onClick={() => toggleShowPassword('old')}
+          className="absolute right-3 top-3 cursor-pointer text-gray-600"
+        />
       </div>
 
-      <div className="input-group">
-
-        <div className="input-icon">
-          <input
-            type={showNewPassword ? 'text' : 'password'}
-            id="newPassword"
-            placeholder="New Password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <FontAwesomeIcon
-            icon={showNewPassword ? faEyeSlash : faEye}
-            onClick={() => toggleShowPassword('new')}
-            className="password-icon"
-          />
-        </div>
-
+      <div className="input-group mb-6 relative">
+        <input
+          type={showNewPassword ? 'text' : 'password'}
+          id="newPassword"
+          placeholder="New Password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+        />
+        <FontAwesomeIcon
+          icon={showNewPassword ? faEyeSlash : faEye}
+          onClick={() => toggleShowPassword('new')}
+          className="absolute right-3 top-3 cursor-pointer text-gray-600"
+        />
       </div>
-      {message && <p className='error-message'>{message}</p>}
-      <button className="update-button" onClick={handleUpdate}>Update</button>
+
+      {message && <p className='text-red-600 mb-4 text-center'>{message}</p>}
+
+      <button
+        className="update-button w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 font-semibold"
+        onClick={handleUpdate}
+      >
+        Update
+      </button>
     </div>
   );
 };
