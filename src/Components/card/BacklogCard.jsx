@@ -246,7 +246,7 @@ const BacklogCard = (props) => {
             <div className='child-data-button'>
               <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
               <div className='child-button' onClick={() => { handleTodo(ele._id) }}>Todo</div>
-              <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progree</div>
+              <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progress</div>
               <div className='child-button' onClick={() => { handleDone(ele._id) }}>done</div>
 
             </div>

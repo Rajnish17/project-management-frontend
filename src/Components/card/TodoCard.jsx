@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import DeleteModal from "./DeleteModal"
 
 
-const Dashboard = () => {
+const TodoCard = () => {
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setshowDeleteModal] = useState(false);
     const [childData, setChildData] = useState([]);
@@ -220,7 +220,7 @@ const Dashboard = () => {
                         <div className='child-data-button'>
                             <div className={`todo-priority ${ele.priority}`}>{(ele.dueDate) && new Date(ele.dueDate).toLocaleString('en-US', { day: '2-digit', month: 'short' })}</div>
                             <div className='child-button' onClick={() => { handleBacklog(ele._id) }}>backlog</div>
-                            <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progree</div>
+                            <div className='child-button' onClick={() => { handleProgress(ele._id) }}>progress</div>
                             <div className='child-button' onClick={() => { handleDone(ele._id) }}>done</div>
 
                         </div>
@@ -236,4 +236,4 @@ const Dashboard = () => {
     )
 };
 
-export default Dashboard;
+export default TodoCard;
