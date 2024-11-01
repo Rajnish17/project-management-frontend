@@ -57,7 +57,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="settings p-6 bg-white rounded-lg shadow-md max-w-2xl mx-auto"> {/* Increased max-width */}
+    <div className=" p-6 bg-white rounded-lg shadow-md md:ml-16 md:w-[38rem]">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Settings</h2>
 
       <div className="input-group mb-4">

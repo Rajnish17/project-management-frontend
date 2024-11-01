@@ -1,15 +1,13 @@
 import React from 'react'
-import "./dashboard.css"
 import Sidebar from '../Components/Sidebar/Sidebar'
 import Setting from '../Components/Settings/Setting'
 
 
 const SettingsPage = () => {
   return (
-    <div className='dashboard-page' >
+    <div className='flex ' >
       <Sidebar />
       <Setting />
-
     </div>
   )
 }

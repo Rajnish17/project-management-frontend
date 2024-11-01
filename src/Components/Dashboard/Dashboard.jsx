@@ -42,7 +42,9 @@ const Dashboard = () => {
       </div>
 
       <div className="head">
-        <div><h3>board</h3></div>
+        <div>
+          <h3>board</h3>
+          </div>
         <div>
         <select onChange={(e)=>{setFilter(e.target.value)}}>
         <option value="week">this week</option>
