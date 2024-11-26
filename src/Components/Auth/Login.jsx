@@ -8,8 +8,8 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('Demo12345');
+  const [email, setEmail] = useState('Demo@gmail.com');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState('');
